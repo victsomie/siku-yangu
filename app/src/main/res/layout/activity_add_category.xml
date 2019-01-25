@@ -5,11 +5,11 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/edit_word"
+        android:id="@+id/edit_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
-        android:hint="@string/hint_word"
+        android:hint="@string/hint_add_category"
         android:inputType="textAutoComplete"
         android:padding="@dimen/small_padding"
         android:layout_marginBottom="@dimen/big_padding"
@@ -17,7 +17,7 @@
         android:textSize="18sp" />
 
     <Button
-        android:id="@+id/button_save_event"
+        android:id="@+id/button_save_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"

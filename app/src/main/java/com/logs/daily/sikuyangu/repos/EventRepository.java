@@ -32,7 +32,6 @@ public class EventRepository {
         new deleteAllAsyncTask(mEventDao).execute();
     }
 
-
     private static class insertAsyncTask extends AsyncTask<Event, Void, Void>{
         private EventDAO mAsyncTaskDao;
 

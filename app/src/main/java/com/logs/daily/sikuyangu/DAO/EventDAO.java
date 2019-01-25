@@ -18,6 +18,6 @@ public interface EventDAO {
     @Query("DELETE FROM event_table")
     void deleteAll();
 
-    @Query("SELECT * from event_table ORDER BY word ASC")
+    @Query("SELECT * from event_table ORDER BY event_name ASC")
     LiveData<List<Event>> getAllEevents();
 }

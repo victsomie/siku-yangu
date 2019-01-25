@@ -11,14 +11,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.logs.daily.sikuyangu.Adapters.EventListAdapter;
+import com.logs.daily.sikuyangu.models.Category;
 import com.logs.daily.sikuyangu.models.Event;
+import com.logs.daily.sikuyangu.ui.AddCategoryActivity;
 import com.logs.daily.sikuyangu.ui.NewEventActivity;
+import com.logs.daily.sikuyangu.viewmodels.CategoryVM;
 import com.logs.daily.sikuyangu.viewmodels.EventVM;
 
 import java.util.List;
@@ -26,8 +30,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     public static final int NEW_EVENT_ACTIVITY_REQUEST_CODE = 1;
+    public static final int NEW_CATEGORY_ACTIVITY_REQUEST_CODE = 2;
 
     private EventVM mEventVM;
+    private CategoryVM mCategoryVM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mEventVM = ViewModelProviders.of(this).get(EventVM.class);
-
+        mCategoryVM = ViewModelProviders.of(this).get(CategoryVM.class);
 
         // Setting up the data
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
@@ -45,13 +51,20 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
-
         mEventVM.getAllWords().observe(this, new Observer<List<Event>>() {
             @Override
             public void onChanged(@Nullable List<Event> events) {
                 // Update the cashed copy of the words to the adapter
                 adapter.setEvents(events);
+            }
+        });
+
+        mCategoryVM.getAllCategories().observe(this, new Observer<List<Category>>() {
+            @Override
+            public void onChanged(@Nullable List<Category> categories) {
+                for (Category category:categories) {
+                    Log.e("** CATEGORIES **", category.getName());
+                }
             }
         });
 
@@ -66,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -74,7 +86,11 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == NEW_EVENT_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
             Event event = new Event(data.getStringExtra(NewEventActivity.EXTRA_REPLY));
             mEventVM.insert(event);
-        } else {
+        } else if (requestCode == NEW_CATEGORY_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
+            Category category = new Category(data.getStringExtra(AddCategoryActivity.EXTRA_REPLY));
+            mCategoryVM.addNewCategory(category);
+        }
+        else {
             Toast.makeText(
                     getApplicationContext(),
                     R.string.empty_not_saved,
@@ -96,8 +112,13 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        if (id == R.id.action_add_category){
+            // Initiate Adding new cateegory
+            Intent intent = new Intent(MainActivity.this, AddCategoryActivity.class);
+            startActivityForResult(intent, NEW_CATEGORY_ACTIVITY_REQUEST_CODE);
+        }
 
-        if (id == R.id.action_delete_all) {
+        if (id == R.id.action_delete_all_events) {
             mEventVM.deleteAll();
             return true;
         }

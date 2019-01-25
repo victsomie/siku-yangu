@@ -10,32 +10,31 @@ import android.widget.EditText;
 
 import com.logs.daily.sikuyangu.R;
 
-public class NewEventActivity extends AppCompatActivity {
-
+public class AddCategoryActivity extends AppCompatActivity {
     public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
 
-    private EditText mEditWordView;
+    private EditText mEditCategoryView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_event);
+        setContentView(R.layout.activity_add_category);
+        mEditCategoryView = findViewById(R.id.edit_category);
 
-        mEditWordView = findViewById(R.id.edit_word);
-
-        final Button button = findViewById(R.id.button_save_event);
+        final Button button = findViewById(R.id.button_save_category);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent replyIntent = new Intent();
-                if (TextUtils.isEmpty(mEditWordView.getText())) {
+                if (TextUtils.isEmpty(mEditCategoryView.getText())) {
                     setResult(RESULT_CANCELED, replyIntent);
                 } else {
-                    String word = mEditWordView.getText().toString();
+                    String word = mEditCategoryView.getText().toString();
                     replyIntent.putExtra(EXTRA_REPLY, word);
                     setResult(RESULT_OK, replyIntent);
                 }
                 finish();
             }
         });
+
     }
 }

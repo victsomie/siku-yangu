@@ -8,15 +8,16 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
+import com.logs.daily.sikuyangu.DAO.CategoryDAO;
 import com.logs.daily.sikuyangu.DAO.EventDAO;
+import com.logs.daily.sikuyangu.models.Category;
 import com.logs.daily.sikuyangu.models.Event;
 
-@Database(entities = {Event.class}, version = 1)
+@Database(entities = {Event.class, Category.class}, version = 1)
 public abstract class EventRoomDatabase extends RoomDatabase {
 
-
-
     public abstract EventDAO eventDAO();
+    public abstract CategoryDAO categoryDAO();
 
     private static volatile EventRoomDatabase INSTANCE;
 
