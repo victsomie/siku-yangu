@@ -96,9 +96,15 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+
+        if (id == R.id.action_delete_all) {
+            mEventVM.deleteAll();
+            return true;
+        }
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            mEventVM.
+            Toast.makeText(this, "Feature coming soon...", Toast.LENGTH_SHORT).show();
             return true;
         }
 

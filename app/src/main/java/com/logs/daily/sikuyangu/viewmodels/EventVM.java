@@ -23,4 +23,8 @@ public class EventVM extends AndroidViewModel {
     public LiveData<List<Event>> getAllWords() { return mAllEvents; }
 
     public void insert(Event event) { mRepository.insert(event); }
+
+    public void deleteAll(){
+        mRepository.deleteEveything();
+    }
 }

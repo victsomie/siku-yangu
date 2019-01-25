@@ -8,7 +8,17 @@ import android.support.annotation.NonNull;
 @Entity(tableName = "event_table")
 public class Event {
 
-    @PrimaryKey
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
     @NonNull
     @ColumnInfo(name = "word")
     private String name;
