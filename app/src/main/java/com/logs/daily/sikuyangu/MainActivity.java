@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.logs.daily.sikuyangu.Adapters.EventListAdapter;
@@ -25,7 +27,9 @@ import com.logs.daily.sikuyangu.ui.NewEventActivity;
 import com.logs.daily.sikuyangu.viewmodels.CategoryVM;
 import com.logs.daily.sikuyangu.viewmodels.EventVM;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
 
     private EventVM mEventVM;
     private CategoryVM mCategoryVM;
+
+    private List<Category> mCategoryList;
+
+    CoordinatorLayout coordinatorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         mEventVM = ViewModelProviders.of(this).get(EventVM.class);
         mCategoryVM = ViewModelProviders.of(this).get(CategoryVM.class);
 
+        mCategoryList = new ArrayList<>();
+
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.activity_main);
         // Setting up the data
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         final EventListAdapter adapter = new EventListAdapter(this);
@@ -56,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(@Nullable List<Event> events) {
                 // Update the cashed copy of the words to the adapter
                 adapter.setEvents(events);
+                for (Event event:events) {
+                    Log.e("** EVENT **", "CATEGORY: " +event.getCategoryId() + ", Event : " + event.getName());
+                }
             }
         });
 
@@ -63,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<Category> categories) {
                 for (Category category:categories) {
-                    Log.e("** CATEGORIES **", category.getName());
+                    mCategoryList.add(category);
+                    Log.e("** CATEGORIES **", category.getName() + ", CategoryID: " + category.getId());
                 }
             }
         });
@@ -84,7 +99,18 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == NEW_EVENT_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
-            Event event = new Event(data.getStringExtra(NewEventActivity.EXTRA_REPLY));
+            // mCategoryList.size()
+            // Math.random() * mCategoryList.size();
+            if(mCategoryList.isEmpty()){
+                Snackbar.make(coordinatorLayout, "A category is required..", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                return;
+            }
+            int theCategoryId = mCategoryList.get(new Random().nextInt( mCategoryList.size())).getId();
+
+            Log.e("** THE CATEGORY ID **", String.valueOf(theCategoryId));
+
+            Event event = new Event(data.getStringExtra(NewEventActivity.EXTRA_REPLY), theCategoryId);
             mEventVM.insert(event);
         } else if (requestCode == NEW_CATEGORY_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
             Category category = new Category(data.getStringExtra(AddCategoryActivity.EXTRA_REPLY));
@@ -120,6 +146,11 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.action_delete_all_events) {
             mEventVM.deleteAll();
+            return true;
+        }
+        if (id == R.id.action_delete_all_categories) {
+            mCategoryVM.deleteAllCategories();
+            Log.e("** DELETE CATEGORIES **", "Initiate delet category");
             return true;
         }
 

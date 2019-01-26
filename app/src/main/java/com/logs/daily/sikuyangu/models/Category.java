@@ -8,8 +8,6 @@ import android.support.annotation.NonNull;
 @Entity(tableName = "category_table")
 public class Category {
 
-
-
     @PrimaryKey(autoGenerate = true)
     private int id;
 

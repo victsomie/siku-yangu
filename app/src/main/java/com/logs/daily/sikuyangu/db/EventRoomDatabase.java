@@ -55,9 +55,10 @@ public abstract class EventRoomDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(Void... voids) {
             mDao.deleteAll();
-            Event event1 = new Event("Bible Study");
+
+            Event event1 = new Event("Bible Study", 245);
             mDao.insert(event1);
-            Event event2 = new Event("Friday Service");
+            Event event2 = new Event("Friday Service", 4356);
             mDao.insert(event2);
 
             return null;

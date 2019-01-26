@@ -28,4 +28,8 @@ public class CategoryVM extends AndroidViewModel {
     public LiveData<List<Category>> getAllCategories(){
         return mCategoryRepository.getmAllCategories();
     }
+
+    public void deleteAllCategories(){
+        mCategoryRepository.deleteAllCategories();
+    }
 }

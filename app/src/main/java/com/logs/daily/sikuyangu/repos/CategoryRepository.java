@@ -47,6 +47,11 @@ public class CategoryRepository {
         }
     }
 
+
+    public void deleteAllCategories(){
+        new deleteAllCategoriesAsyncTask(mCategoryDAO).execute();
+    }
+
     private static class deleteAllCategoriesAsyncTask extends AsyncTask<Category, Void, Void>{
         CategoryDAO mCategoryDAO;
 
