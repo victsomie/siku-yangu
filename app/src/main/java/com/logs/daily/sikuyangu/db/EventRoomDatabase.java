@@ -13,7 +13,7 @@ import com.logs.daily.sikuyangu.DAO.EventDAO;
 import com.logs.daily.sikuyangu.models.Category;
 import com.logs.daily.sikuyangu.models.Event;
 
-@Database(entities = {Event.class, Category.class}, version = 1)
+@Database(entities = {Event.class, Category.class}, version = 1, exportSchema = false)
 public abstract class EventRoomDatabase extends RoomDatabase {
 
     public abstract EventDAO eventDAO();

@@ -8,8 +8,10 @@
         android:id="@+id/spinner_categories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:prompt="@string/select_category"/>
+        android:layout_marginBottom="@dimen/big_padding"
+        android:layout_marginTop="@dimen/big_padding"
+        android:spinnerMode="dialog"
+        android:prompt="@string/action_add_category"/>
 
     <EditText
         android:id="@+id/edit_word"

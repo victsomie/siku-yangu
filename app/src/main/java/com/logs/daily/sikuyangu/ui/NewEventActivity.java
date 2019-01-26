@@ -3,9 +3,9 @@ package com.logs.daily.sikuyangu.ui;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,10 +22,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 public class NewEventActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
@@ -33,7 +29,7 @@ public class NewEventActivity extends AppCompatActivity implements AdapterView.O
 
     private CategoryVM categoryVM;
 
-    @BindView(R.id.spinner_categories)
+    // @BindView(R.id.spinner_categories)
     Spinner spCategories;
 
     private EditText mEditWordView;
@@ -44,7 +40,9 @@ public class NewEventActivity extends AppCompatActivity implements AdapterView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_event);
-        ButterKnife.bind(this);
+        // ButterKnife.bind(this);
+
+        spCategories = (Spinner) findViewById(R.id.spinner_categories);
 
         mainCategoriesList = new ArrayList<>();
         categoryVM = ViewModelProviders.of(this).get(CategoryVM.class);
@@ -105,6 +103,11 @@ public class NewEventActivity extends AppCompatActivity implements AdapterView.O
 
     // Method to return id of a category
     private Integer getTheCategoryId(String name, List<Category> theCategories){
+
+        if(theCategories.isEmpty()){
+            // Fall back if the list provided is empty
+            return null;
+        }
 
         Iterator<Category> iterator = theCategories.iterator();
         while (iterator.hasNext()) {

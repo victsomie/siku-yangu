@@ -3,6 +3,7 @@ package com.logs.daily.sikuyangu.models;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
@@ -10,7 +11,7 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "event_table",
         foreignKeys = @ForeignKey(entity = Category.class, parentColumns = "id", childColumns = "categoryId",
-                onDelete = CASCADE, onUpdate = CASCADE))
+                onDelete = CASCADE, onUpdate = CASCADE),  indices = {@Index("categoryId")})
 public class Event {
 
     @PrimaryKey(autoGenerate = true)
