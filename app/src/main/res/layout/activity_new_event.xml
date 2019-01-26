@@ -4,6 +4,13 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Spinner
+        android:id="@+id/spinner_categories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:prompt="@string/select_category"/>
+
     <EditText
         android:id="@+id/edit_word"
         android:layout_width="match_parent"

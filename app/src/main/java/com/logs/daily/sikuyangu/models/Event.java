@@ -22,7 +22,6 @@ public class Event {
 
     private int categoryId;
 
-
     public int getCategoryId() {
         return categoryId;
     }

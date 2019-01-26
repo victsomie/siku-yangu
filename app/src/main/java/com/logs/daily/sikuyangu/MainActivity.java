@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
             Log.e("** THE CATEGORY ID **", String.valueOf(theCategoryId));
 
-            Event event = new Event(data.getStringExtra(NewEventActivity.EXTRA_REPLY), theCategoryId);
+            Event event = new Event(data.getStringExtra(NewEventActivity.EXTRA_REPLY), Integer.valueOf(data.getStringExtra(NewEventActivity.EXTRA_CATEGORY)));
             mEventVM.insert(event);
         } else if (requestCode == NEW_CATEGORY_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
             Category category = new Category(data.getStringExtra(AddCategoryActivity.EXTRA_REPLY));
