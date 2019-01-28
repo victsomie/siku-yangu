@@ -77,11 +77,11 @@ public class NewEventActivity extends AppCompatActivity implements AdapterView.O
                     setResult(RESULT_CANCELED, replyIntent);
                 } else {
                     String word = mEditWordView.getText().toString();
-                    if(mCategoryId < 1){
-                        Toast.makeText(NewEventActivity.this, "Category is required!", Toast.LENGTH_SHORT).show();
-                    }
-                    // int categoryId = mainCategoriesList.indexOf(spCategories.getSelectedItem().toString());
 
+                    if (mainCategoriesList.isEmpty() || mCategoryId < 1 ){
+                        Toast.makeText(NewEventActivity.this, "Category is required!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
                     mCategoryId = getTheCategoryId((String) spCategories.getSelectedItem(), mainCategoriesList);
 
