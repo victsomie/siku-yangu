@@ -27,6 +27,11 @@ public class CategoryRepository {
         return mAllCategories;
     }
 
+    public LiveData<List<String>> getCategoryNamesAsArray(){
+        return mCategoryDAO.getCategoryNamesAsArray();
+    }
+
+
     public void insertCategory(Category category){
         // mCategoryDAO.insert(category);
         new insertCategoryAsyncTask(mCategoryDAO).execute(category);

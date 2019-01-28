@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        mCategoryVM.addNewCategory(new Category("Uncategorized"));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -106,13 +107,16 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
                 return;
             }
-            int theCategoryId = mCategoryList.get(new Random().nextInt( mCategoryList.size())).getId();
+            // int theCategoryId = Integer.valueOf(data.getStringExtra(NewEventActivity.EXTRA_CATEGORY));
 
-            Log.e("** THE CATEGORY ID **", String.valueOf(theCategoryId));
+            // Log.e("** THE CATEGORY ID **", String.valueOf(theCategoryId));
+            Log.e("** THE CATEGORY ID **", data.getStringExtra(NewEventActivity.EXTRA_CATEGORY));
 
             Event event = new Event(data.getStringExtra(NewEventActivity.EXTRA_REPLY), Integer.valueOf(data.getStringExtra(NewEventActivity.EXTRA_CATEGORY)));
             mEventVM.insert(event);
+
         } else if (requestCode == NEW_CATEGORY_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
+            // RECIVING FROM ADDINF CATEGORY
             Category category = new Category(data.getStringExtra(AddCategoryActivity.EXTRA_REPLY));
             mCategoryVM.addNewCategory(category);
         }

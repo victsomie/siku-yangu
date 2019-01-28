@@ -20,4 +20,8 @@ public interface CategoryDAO {
 
     @Query("SELECT * from category_table ORDER BY category_name asc")
     LiveData<List<Category>> getAllCategories();
+
+
+    @Query("SELECT category_name from category_table")
+    LiveData<List<String>> getCategoryNamesAsArray();
 }

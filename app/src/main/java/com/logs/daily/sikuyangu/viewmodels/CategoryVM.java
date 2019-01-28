@@ -29,6 +29,10 @@ public class CategoryVM extends AndroidViewModel {
         return mCategoryRepository.getmAllCategories();
     }
 
+    public LiveData<List<String>> getCategoryNamesAsArray(){
+        return mCategoryRepository.getCategoryNamesAsArray();
+    }
+
     public void deleteAllCategories(){
         mCategoryRepository.deleteAllCategories();
     }
